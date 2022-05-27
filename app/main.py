@@ -83,7 +83,7 @@ def read_item(input: int):
     output = fibonacci(input)
     end_time = time.monotonic_ns()
     execution_time_in_ms = round((end_time - start_time)/1000000.0,4)   #   converting nano seconds into milli seconds by dividing by 1000000.
-    return {"msg": output["msg"],"nth_fibonacci": output["fibonacci_result"],"execution_time_in_ms":execution_time_in_ms}    #   calculating the fibonaci number for a million should take approx 75 milliseconds
+    return {"msg": output["msg"],"execution_time_in_ms":execution_time_in_ms,"nth_fibonacci": output["fibonacci_result"]}    #   calculating the fibonaci number for a million should take approx 75 milliseconds
     
     """
     execution time is intentionally calculated in the read_item function as we are caching the result
