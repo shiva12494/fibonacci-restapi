@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 from functools import lru_cache # for adding cache functionality for quicker response
 from fastapi import FastAPI # for deploying the solution as an API
 import uvicorn #ASGI web server implementation for python
