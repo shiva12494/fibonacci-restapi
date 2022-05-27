@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from functools import lru_cache # for adding cache functionality for quicker response
 from fastapi import FastAPI # for deploying the solution as an API
 import uvicorn #ASGI web server implementation for python
@@ -12,7 +13,7 @@ def fibonacci(n: int):
     """
     if n <= 0:
         # raise ValueError("Negative arguments not implemented")
-        result = {"fibonacci_result":0,"msg":"Non-Negative arguments not implemented"}
+        result = {"fibonacci_result":None,"msg":"Non-Negative arguments not implemented"}
         return result
     """
     we can pass a msg explaining what is wrong with the input, or raise ValueError. If we return a msg then
