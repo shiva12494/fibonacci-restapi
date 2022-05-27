@@ -1,5 +1,5 @@
 from functools import lru_cache # for adding cache functionality for quicker response
-from fastapi import FastAPI # for deploying the solution as an API
+from fastapi import FastAPI,Path # for deploying the solution as an API
 import uvicorn #ASGI web server implementation for python
 import time # for calculating execution time in the output
 
@@ -9,13 +9,8 @@ def fibonacci(n: int):
     """ 
     async is not very helpful in this case as this is a mathematical operation and we need the output
     from the previous call to continue with the current calculations.
-    """
-    if n <= 0:
-        # raise ValueError("Negative arguments not implemented")
-        result = {"fibonacci_result":None,"msg":"Non-Negative arguments not implemented"}
-        return result
-    """
-    we can pass a msg explaining what is wrong with the input, or raise ValueError. If we return a msg then
+
+    We can pass a msg explaining what is wrong with the input, or raise ValueError. If we return a msg then
     this will be of status code 200 and wont be logged as an error. If we want to log all error then raise error is
     a better approach. Haven't raised error for this exercise.
     
@@ -71,8 +66,9 @@ def read_root():    #   root path
 
 
 @app.get("/fibonacci/{input}")
-def read_item(input: int):
+def read_item(input: int = Path(title="Fibonacci input", ge=1)):
     """
+    Validating finbonacci input to be a number greater than or equal to 1 else raise validation error 
     If the input is bigger than 1 million, the function takes longer to compute the result, which blocks the python thread.
     In order to facilitate computing larger fibonacci series, we would have to use task scheduler similar to celery
     to compute the fibonacci series based on the user input and send the result to the user after its computed in 
