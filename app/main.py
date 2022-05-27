@@ -1,4 +1,4 @@
-from functools import lru_cache
+from functools import lru_cache # for adding cache functionality for quicker response
 from fastapi import FastAPI
 import uvicorn
 import time
