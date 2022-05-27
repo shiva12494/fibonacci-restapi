@@ -4,27 +4,7 @@ import uvicorn #ASGI web server implementation for python
 import time # for calculating execution time in the output
 
 app = FastAPI() #creating the app object
-    
-def fibonacci(n: int):                  
-    """ 
-    async is not very helpful in this case as this is a mathematical operation and we need the output
-    from the previous call to continue with the current calculations.
 
-    We can pass a msg explaining what is wrong with the input, or raise ValueError. If we return a msg then
-    this will be of status code 200 and wont be logged as an error. If we want to log all error then raise error is
-    a better approach. Haven't raised error for this exercise.
-    
-    """ 
-        	
-    result = {"fibonacci_result":__fibo(n)[0],"msg":"Success"}
-
-    """ 
-    __fibo(n) is the private function that calculates the fibonacci number.
-    Made it private so that its not accessible thru api calls. Separating the business logic
-    to a private method is a good practice in production.
-    """
-    return result
-    
 @lru_cache(maxsize=1000,typed=True)  
 def __fibo(n: int):
     """  
@@ -45,7 +25,7 @@ def __fibo(n: int):
     In the below code a = F(n),b = F(n+1),c = F(2n),d = F(2n+1)
     base case F(n)=0 and F(n+1)=1
 
-    """
+"""
     if n == 0:
         return (0, 1) # base case
     else:		
@@ -59,6 +39,28 @@ def __fibo(n: int):
             return (c, d)
         else:
             return (d, c + d)
+    
+def fibonacci(n: int):                  
+    """ 
+    Haven't used aync as async is not very helpful in this case as this is a mathematical operation and we need the output
+    from the previous call to continue with the current calculations.
+
+    We can pass a msg explaining what is wrong with the input, or raise ValueError. If we return a msg then
+    this will be of status code 200 and wont be logged as an error. If we want to log all error then raise error is
+    a better approach. Handled the input validation in read_item()
+    
+    """ 
+        	
+    result = {"fibonacci_result":__fibo(n)[0],"msg":"Success"}
+
+    """ 
+    __fibo(n) is the private function that calculates the fibonacci number.
+    Made it private so that its not accessible thru api calls. Separating the business logic
+    to a private method is a good practice in production.
+    """
+    return result
+    
+
 
 @app.get("/")
 def read_root():    #   root path
